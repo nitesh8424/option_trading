@@ -47,9 +47,8 @@ async function sendAlertMS(signal) {
 }
 
 async function sendAlertError({error_msg, message}) {
-    console.log('entered alert error function')
-    const token = "7919283253:AAGfl4X9LLr4At22gzsp0HaGKndCQ2NY0ms";
-    const chat = "6981449785";
+    const token = "8721770365:AAFBl3BWS5Z9idiWwyDbIb6g8exqNkokaMM";
+    const chat = "2124375058";
     const url = `https://api.telegram.org/bot${token}/sendMessage`;
     const msg = error_msg ? `Error - ${error_msg}` : `Message - ${message}`;
 
