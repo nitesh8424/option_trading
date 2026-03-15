@@ -123,12 +123,33 @@ async function runEngine() {
         }
 
     } catch (err) {
-        sendAlert.sendAlertError(err.message);
+        sendAlert.sendAlertError({ error_msg: err.message });
         console.log("Error:", err.message);
 
     }
 
 }
 
-runEngine();
-cron.schedule("*/20 * * * * *", runEngine);
+function startEngine() {
+    console.log("Market Open - Starting Engine");
+    sendAlert.sendAlertError({ message: "Market Open - Starting Engine" })
+    engineTask = cron.schedule("*/20 * * * * *", async () => {
+        await runEngine();
+    });
+}
+
+function stopEngine() {
+    if (engineTask) {
+        engineTask.stop();
+        sendAlert.sendAlertError({ message: "Market Closed - Engine Stopped" })
+        console.log("Market Closed - Engine Stopped");
+    }
+}
+
+cron.schedule("16 9 * * 1-5", startEngine, {
+    timezone: "Asia/Kolkata"
+});
+
+cron.schedule("15 15 * * 1-5", stopEngine, {
+    timezone: "Asia/Kolkata"
+});

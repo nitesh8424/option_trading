@@ -46,11 +46,11 @@ async function sendAlertMS(signal) {
     }
 }
 
-async function sendAlertError(error_msg) {
+async function sendAlertError({error_msg, message}) {
     const token = "7919283253:AAGfl4X9LLr4At22gzsp0HaGKndCQ2NY0ms";
     const chat = "6981449785";
     const url = `https://api.telegram.org/bot${token}/sendMessage`;
-    const msg = error_msg;
+    const msg = error_msg ? `Error - ${error_msg}` : `Message - ${message}`;
 
     try {
         const data = await axios.post(url, {
