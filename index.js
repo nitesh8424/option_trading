@@ -14,6 +14,10 @@ const detectLiquiditySweep = require("./trading/patterns/liquiditySweep");
 const sendAlert = require("./trading/sendAlert");
 const generateSignal = require("./trading/getSignal");
 
+const express = require("express");
+const app = express();
+
+const PORT = process.env.PORT || 3000;
 
 let prices = [];
 let volumes = [];
@@ -145,6 +149,11 @@ function stopEngine() {
         console.log("Market Closed - Engine Stopped");
     }
 }
+
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+    sendAlert.sendAlertError({ message: "Application Started." })
+});
 
 cron.schedule("16 9 * * 1-5", startEngine, {
     timezone: "Asia/Kolkata"
