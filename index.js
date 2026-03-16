@@ -150,15 +150,17 @@ function stopEngine() {
     }
 }
 
+app.get('/start', (req,res)=>{
+    startEngine();
+    res.send('code started');
+});
+
+app.get('/stop', (req,res) => {
+    stopEngine();
+    res.send('code started');
+});
+
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
     sendAlert.sendAlertError({ message: "Application Started." })
-});
-
-cron.schedule("16 9 * * 1-5", startEngine, {
-    timezone: "Asia/Kolkata"
-});
-
-cron.schedule("15 15 * * 1-5", stopEngine, {
-    timezone: "Asia/Kolkata"
 });
